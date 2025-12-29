@@ -14,6 +14,80 @@
       font-family: 'Poppins', sans-serif;
       color: #fff;
     }
+
+
+
+
+
+
+
+
+
+
+.neon-title{
+    color:#00ffff;
+    text-shadow:0 0 10px #00ffff;
+    font-weight:600;
+}
+
+/* Card */
+.cert-card{
+    background:#111;
+    border-radius:12px;
+    padding:15px;
+    text-align:center;
+    transition:0.4s ease;
+    border:1px solid #222;
+}
+
+/* Image */
+.cert-card img{
+    width:100%;
+    border-radius:8px;
+    margin-bottom:12px;
+}
+
+/* Text */
+.cert-card h5{
+    color:#ff00ff;
+    margin-bottom:5px;
+}
+
+.cert-card p{
+    font-size:14px;
+    color:#aaa;
+}
+
+/* 🔥 Hover Effect */
+.cert-card:hover{
+    transform:translateY(-10px) scale(1.03);
+    box-shadow:
+        0 0 15px #00ffff,
+        0 0 30px rgba(0,255,255,0.4);
+    border-color:#00ffff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     .about-modern {
   max-width: 750px;
   margin: 150px auto;
@@ -998,7 +1072,7 @@
   </p>
 
   <div class="about-links">
-    <a href="#" class="about-link">Projects</a>
+    <a href="#certificates" class="about-link">Certificate</a>
     <a href="#" class="about-link">Contact</a>
   </div>
 </section>
@@ -1157,42 +1231,28 @@
 
 
 <!-- TESTIMONIALS -->
-<section id="testimonials" class="container py-5 text-center" style="margin-top: 100px;">
-  <h1 style="font-size:50px; margin-bottom:50px;">TESTIMONIALS</h1>
-  <div class="row g-4 justify-content-center">
+<div class="container py-5 " id="certificates">
+    <h2 class="text-center neon-title mb-5">My Certificates</h2>
 
-    <!-- TESTIMONIAL CARD 1 -->
-    <div class="col-md-4">
-      <div class="testimonial-card rgb-card p-4 text-center">
-        <i class="fa-solid fa-quote-left fa-2x mb-3" style="color: #61AFEF;"></i>
-        <p>"Shubham is extremely talented and dedicated. His coding skills are top-notch, and his designs are modern and creative."</p>
-        <h5 class="mt-3">– Priyanka Mahavar</h5>
-        <small>programming Teacher</small>
-      </div>
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="cert-card" style="height: 500px;">
+                <img src="im1.jpeg" alt="">
+                <h5>Instore Prominter</h5>
+                <p></p>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="cert-card"  style="height: 500px;">
+                <img src="im2.jpeg" alt="">
+                <h5>Tally Prime</h5>
+                <p></p>
+            </div>
+        </div>
+
     </div>
-
-    <!-- TESTIMONIAL CARD 2 -->
-    <div class="col-md-4">
-      <div class="testimonial-card rgb-card p-4 text-center">
-        <i class="fa-solid fa-quote-left fa-2x mb-3" style="color: #FF009D;"></i>
-        <p>"Very professional and creative. Delivered the project on time and exceeded expectations."</p>
-        <h5 class="mt-3">– Deepa Nanakvani</h5>
-        <small>Web Design Teacher</small>
-      </div>
-    </div>
-
-    <!-- TESTIMONIAL CARD 3 -->
-    <div class="col-md-4">
-      <div class="testimonial-card rgb-card p-4 text-center">
-        <i class="fa-solid fa-quote-left fa-2x mb-3" style="color: #8CFF00;"></i>
-        <p>"Great communicator and skilled developer. Loved working with him on multiple projects."</p>
-        <h5 class="mt-3">– Mehzabeen Moyal</h5>
-        <small>Js Teacher</small>
-      </div>
-    </div>
-
-  </div>
-</section>
+</div>
 <!-- Contact Form -->
 <section class="rgb-contact" id="contact">
   <div class="card">
@@ -1244,6 +1304,8 @@
     </div>
   </div>
 </section>
+
+
 
 <script>
   function miniSend(){
