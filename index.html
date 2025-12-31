@@ -336,10 +336,46 @@
     /* Form */
     .contact-form {
       background: #0d0d0d;
-      padding: 25px;
-      border-radius: 15px;
+      padding: 30px;
+      border-radius: 16px;
       border: 1px solid #0ff;
-      box-shadow: 0 0 20px #0ff;
+      box-shadow: 0 0 28px rgba(0,255,255,0.08);
+      max-width: 100%;
+    }
+
+    /* Larger inputs and better spacing */
+    .contact-form .form-control {
+      padding: 14px 16px;
+      font-size: 16px;
+      border-radius: 10px;
+      background: #0b0b0b;
+      border: 1px solid rgba(255,255,255,0.06);
+      color: #fff;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+    }
+
+    .contact-form textarea.form-control {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .contact-form .btn-send {
+      display: block;
+      width: 100%;
+      padding: 12px 16px;
+      background: linear-gradient(90deg, #00eaff, #ff00ff);
+      color: #080808;
+      border: none;
+      font-weight: 700;
+      border-radius: 10px;
+      margin-top: 8px;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .contact-form .btn-send:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
 
     footer {
@@ -381,7 +417,7 @@
    .rgb-contact {
     background: #050505;
     color: #fff;
-    padding: 60px 16px;
+    padding: 80px 18px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -389,14 +425,28 @@
 
   .rgb-contact .card {
     width: 100%;
-    max-width: 980px;
-    padding: 28px;
-    border-radius: 14px;
+    max-width: 1200px;
+    padding: 36px;
+    border-radius: 16px;
     background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
     position: relative;
     overflow: visible;
     border: 1px solid rgba(255,255,255,0.04);
   }
+
+  /* Responsive tweak: reduce padding on narrower screens */
+  @media (max-width: 992px) {
+    .rgb-contact {
+      padding: 48px 16px;
+    }
+    .rgb-contact .card {
+      padding: 24px;
+      max-width: 100%;
+    }
+  }
+
+  /* Slight gap improvement between columns */
+  .rgb-contact .card .row { gap: 20px; align-items: center; }
 
   /* animated RGB glow border */
   .rgb-contact .card::before {
@@ -1051,7 +1101,7 @@
 
     <div class="col-md-5 text-center">
       <div class="hero-image-wrap">
-        <img src="mine.webp" class="hero-image" alt="Profile">
+        <img src="mine2.jpg" class="hero-image" alt="Profile">
       </div>
     </div>
 
@@ -1285,7 +1335,7 @@
       </div>
 
       <!-- small contact form -->
-      <div class="col" style="flex:0 0 360px; margin-left:auto;">
+      <div class="col" style="flex:0 0 520px; min-width:360px; margin-left:auto;">
         <div class="contact-form">
           <form id="miniContact" onsubmit="return false;">
             <div style="display:flex; gap:8px; margin-bottom:8px;">
@@ -1295,7 +1345,7 @@
               <input class="form-control" id="miniEmail" type="email" placeholder="Email" required>
             </div>
             <div style="display:flex; gap:8px; margin-bottom:10px;">
-              <input class="form-control" id="miniMsg" type="text" placeholder="Short message" required>
+              <textarea class="form-control" id="miniMsg" placeholder="Short message" required></textarea>
             </div>
             <button class="btn-send" onclick="miniSend()">Send</button>
           </form>
@@ -1308,24 +1358,52 @@
 
 
 <script>
-  function miniSend(){
-    const name = document.getElementById('miniName').value.trim();
-    const email = document.getElementById('miniEmail').value.trim();
-    const msg = document.getElementById('miniMsg').value.trim();
-    if(!name || !email || !msg){
-      alert('Please fill all fields');
-      return;
+  // Close mobile navbar when a nav link is clicked or when clicking outside the open menu
+  (function(){
+    const collapseEl = document.querySelector('.navbar-collapse');
+    if(!collapseEl) return;
+
+    // Helper: get or create Bootstrap Collapse instance without toggling
+    function getCollapseInstance(){
+      return bootstrap.Collapse.getInstance(collapseEl) || new bootstrap.Collapse(collapseEl, {toggle:false});
     }
-    // demo behaviour: show a quick success message
-    const btn = event?.target || null;
-    if(btn) btn.innerText = 'Sending...';
-    setTimeout(()=>{
-      alert('Message sent (demo). Thanks, ' + name + '!');
-      if(btn) btn.innerText = 'Send';
-      document.getElementById('miniContact').reset();
-    }, 800);
-  }
+
+    // Close when a nav-link inside the collapse is clicked
+    collapseEl.addEventListener('click', function(e){
+      const link = e.target.closest('.nav-link');
+      if(link){
+        // let normal anchor navigation proceed, then hide
+        setTimeout(()=> getCollapseInstance().hide(), 50);
+      }
+    });
+
+    // Close when clicking outside the open collapse (but ignore clicks on the toggler)
+    document.addEventListener('click', function(e){
+      const isOpen = collapseEl.classList.contains('show');
+      const clickedInside = e.target.closest('.navbar-collapse');
+      const clickedToggler = e.target.closest('.navbar-toggler');
+      if(isOpen && !clickedInside && !clickedToggler){
+        getCollapseInstance().hide();
+      }
+    });
+
+    // Optional: smooth scroll for hash links and then close
+    document.querySelectorAll('.navbar-collapse .nav-link[href^="#"]').forEach(link=>{
+      link.addEventListener('click', function(e){
+        const target = this.getAttribute('href');
+        if(target && target.startsWith('#')){
+          const el = document.querySelector(target);
+          if(el){
+            e.preventDefault();
+            el.scrollIntoView({behavior: 'smooth'});
+            setTimeout(()=> getCollapseInstance().hide(), 300);
+          }
+        }
+      });
+    });
+  })();
 </script>
+
 
 <!-- Note: requires Font Awesome for icons. If not present, include:
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
